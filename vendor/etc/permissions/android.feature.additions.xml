@@ -1,0 +1,10 @@
+<!-- This adds features that the Google Play Store servers require for
+     many apps. This is certainly not the right way for these to get
+     included. When someone figures out the right way, these should be
+     removed. -->
+<permissions>
+  <feature name="android.hardware.faketouch" />
+  <feature name="android.hardware.screen.portrait" />
+  <feature name="android.hardware.touchscreen" />
+  <feature name="android.hardware.touchscreen.multitouch" />
+</permissions>

@@ -1,0 +1,3 @@
+libtvmanager_jni.so
+libpicturemanager_jni.so
+libfactorymanager_jni.so

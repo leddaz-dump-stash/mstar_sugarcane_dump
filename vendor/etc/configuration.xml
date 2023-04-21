@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurations revision="3">
+	<configuration counter="ARMv8_Cortex_A73_cnt3" event="0x19" title="Bus" name="Access" supports_event_based_sampling="yes"/>
+	<configuration counter="ARMv8_Cortex_A73_ccnt" event="0x11" title="Clock" name="Cycles" supports_event_based_sampling="yes"/>
+	<configuration counter="ARMv8_Cortex_A73_cnt0" event="0x8" title="Instruction" name="Executed" supports_event_based_sampling="yes"/>
+	<configuration counter="ARMv8_Cortex_A73_freq" title="Clock" name="Frequency"/>
+	<configuration counter="ARMv8_Cortex_A73_system" title="CPU Activity" name="System" cores="1"/>
+	<configuration counter="ARMv8_Cortex_A73_user" title="CPU Activity" name="User" cores="1"/>
+	<configuration counter="Linux_block_rq_rd" title="Disk I/O" name="Read"/>
+	<configuration counter="Linux_block_rq_wr" title="Disk I/O" name="Write"/>
+	<configuration counter="Linux_meminfo_memfree" title="Memory" name="Free"/>
+	<configuration counter="Linux_meminfo_memused" title="Memory" name="Used"/>
+</configurations>
