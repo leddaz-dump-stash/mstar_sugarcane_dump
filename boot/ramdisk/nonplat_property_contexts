@@ -1,0 +1,15 @@
+drm.service.enabled                         u:object_r:system_prop:s0
+ms.mstplayer.                               u:object_r:mstar_media_prop:s0
+mstar.dvfs.                                 u:object_r:mstar_system_prop:s0
+mstar.media.                                u:object_r:mstar_media_prop:s0
+mstar.primary.audioHAL.version              u:object_r:mstar_media_prop:s0
+mstar.                                      u:object_r:mstar_system_prop:s0
+persist.adbnet.                             u:object_r:adbnet_prop:s0
+persist.done.adbnet                         u:object_r:adbnet_prop:s0
+persist.mstar.ctsautoconfig.finished        u:object_r:mstar_system_prop:s0
+persist.netd.stable_secret                  u:object_r:system_prop:s0
+user.                                       u:object_r:system_prop:s0
+uti.plugin.loglevel                         u:object_r:system_prop:s0
+wifi.direct.interface                       u:object_r:system_prop:s0
+wifi.interface                              u:object_r:system_prop:s0
+wifi.supplinant.name                        u:object_r:system_prop:s0

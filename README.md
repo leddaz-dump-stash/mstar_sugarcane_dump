@@ -1,0 +1,14 @@
+# sugarcane-user 8.0.0 OPR5.170623.014 5.5.0.66 release-keys
+- manufacturer: mstar
+- platform: m7221
+- codename: sugarcane
+- flavor: sugarcane-user
+- release: 8.0.0
+- id: OPR5.170623.014
+- incremental: 5.5.0.66
+- tags: release-keys
+- fingerprint: MStar/sugarcane/sugarcane:8.0.0/OPR5.170623.014/5.5.0.66:user/release-keys
+- is_ab: false
+- brand: MStar
+- branch: sugarcane-user-8.0.0-OPR5.170623.014-5.5.0.66-release-keys
+- repo: mstar_sugarcane_dump

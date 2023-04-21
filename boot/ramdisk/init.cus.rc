@@ -1,0 +1,10 @@
+###-- value will update by Customer shell, do not change value manual. --##
+
+on init
+    
+
+
+on post-fs-data
+    mkdir /data/redis
+    chmod 0700 /data/redis
+    chown system system /data/redis
