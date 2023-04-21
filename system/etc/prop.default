@@ -1,0 +1,14 @@
+#
+# ADDITIONAL_DEFAULT_PROPERTIES
+#
+ro.secure=1
+security.perf_harden=1
+ro.allow.mock.location=0
+ro.debuggable=1
+#
+# BOOTIMAGE_BUILD_PROPERTIES
+#
+ro.bootimage.build.date=Mon Apr 29 18:34:00 UTC 2019
+ro.bootimage.build.date.utc=1556562840
+ro.bootimage.build.fingerprint=MStar/sugarcane/sugarcane:8.0.0/OPR5.170623.014/TVOS-04.24.010.04.01:userdebug/test-keys
+persist.sys.usb.config=adb
