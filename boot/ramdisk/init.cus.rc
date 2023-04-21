@@ -1,0 +1,7 @@
+###-- value will update by Customer shell, do not change value manual. --##
+
+on init
+    
+    # Promethean platformservice deployment needs
+    chmod 0644 /system/etc/init/redis.rc
+    chmod 0644 /system/etc/init/android-fuse.rc

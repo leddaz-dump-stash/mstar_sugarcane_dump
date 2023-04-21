@@ -1,0 +1,14 @@
+# sugarcane-userdebug 8.0.0 OPR5.170623.014 TVOS-04.24.010.04.01 test-keys
+- manufacturer: mstar
+- platform: m7221
+- codename: sugarcane
+- flavor: sugarcane-userdebug
+- release: 8.0.0
+- id: OPR5.170623.014
+- incremental: TVOS-04.24.010.04.01
+- tags: test-keys
+- fingerprint: MStar/sugarcane/sugarcane:8.0.0/OPR5.170623.014/TVOS-04.24.010.04.01:userdebug/test-keys
+- is_ab: false
+- brand: MStar
+- branch: sugarcane-userdebug-8.0.0-OPR5.170623.014-TVOS-04.24.010.04.01-test-keys
+- repo: mstar_sugarcane_dump
