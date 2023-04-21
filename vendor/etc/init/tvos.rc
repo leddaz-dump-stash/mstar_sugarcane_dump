@@ -1,0 +1,7 @@
+# service for tv
+service tvservice /applications/bin/tvos
+    setenv LD_LIBRARY_PATH /applications/bin:/mslib:/mslib/utopia:/tvconfig/config:/config:/mslib/ginga/jvm/lib
+    class main
+    disabled
+    oneshot
+    seclabel u:r:tvos:s0

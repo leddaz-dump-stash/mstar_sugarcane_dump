@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Allowed packages list that system keep output 4k2k30hzfor them -->
+
+<packages>
+    <item>com.android.browser</item>
+	<item>com.ktc.launcher</item>
+	<item>com.ktc.ktcsettings</item>
+	<item>com.jrm.localmm</item>
+	<item>com.mstar.tv.tvplayer.ui</item>
+	<item>android.systemupdate.service</item>
+	<item>com.ktc.oobe</item>
+	<item>com.android.documentsui</item>
+	<item>com.android.settings</item>
+	<item>com.android.tv.settings</item>
+	<item>com.prometheanworld.whiteboard</item>
+	<item>com.prometheanworld.unifiedlauncher</item>
+	<item>com.prometheanworld.activpanelwebservice</item>
+	<item>com.prometheanworld.spinner</item>
+	<item>com.prometheanworld.telemetryservice</item>
+	<item>com.prometheanworld.motionevents</item>
+	<item>com.prometheanworld.otaupdateapp</item>
+	<item>com.prometheanworld.timer</item>
+	<item>com.prometheanworld.oobe</item>
+	<item>com.prometheanworld.crashanalyticsservice</item>
+	<item>com.prometheanworld.oobeboottool</item>	
+</packages>

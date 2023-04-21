@@ -1,0 +1,241 @@
+import /vendor/etc/init/hw/init.${ro.hardware}.usb.rc
+
+on early-init
+    mount debugfs debugfs /sys/kernel/debug
+
+on init
+    # start essential services and bootanimation early cuz early mount
+    start servicemanager
+    start hwservicemanager
+    start vndservicemanager
+    start surfaceflinger
+    start bootanim
+    export EXTERNAL_STORAGE /mnt/sdcard
+    symlink /sdcard /mnt/sdcard
+
+    # usb/other sdcard/iso/samba mount point
+    mkdir /mnt/usb 0775 root system
+    mkdir /mnt/other_sdcard 0775 root system
+    mkdir /mnt/iso 0775 root system
+    mkdir /mnt/samba 0775 root system
+
+    # cache/log/temp... mount point
+    mkdir /var 0775 system system
+    mount tmpfs tmpfs /var mode=0775,gid=1000
+
+    # create /tmp point to /var/tmp
+    mkdir /var/tmp 0775 system system
+    symlink /var/tmp /tmp
+
+    # create /var/tmp/media for camera/ve/dwin
+    mkdir /var/tmp/media 0775 media media
+    mkdir /var/tmp/hwc 0775 system system
+    mkdir /var/tmp/providers.media 0775 system sdcard_rw
+    #create /var/tmp/camera for camera temp file shot
+    mkdir /var/tmp/camera 0775 camera camera
+
+    # DFB use socket mode for 64bit kernel
+    mkdir /dev/shm
+    mount -t tmpfs tmpfs /dev/shm
+
+    # create tv related symlink
+    symlink /tvservice/std_lib/lib /lib
+    symlink /tvservice/mslib /mslib
+    symlink /tvservice/applications /applications
+    symlink /tvcertificate /certificate
+    symlink /tvdatabase/Database /Database
+    symlink /tvdatabase/DatabaseBackup /DatabaseBackup
+    symlink /tvcustomer/Customer /Customer
+
+    write /dev/cpuset/system-background/cpus 0,1
+    write /dev/cpuset/foreground/boost/cpus 2,3
+    write /dev/cpuset/foreground/cpus 2,3
+    write /dev/cpuset/top-app/cpus 2-3
+    write /dev/cpuset/background/cpus 0
+
+on fs
+    mount_all /fstab.m7221
+
+on post-fs
+    # insert xc driver
+    insmod /vendor/lib/modules/mdrv-xc.ko
+    wait /dev/scaler
+    # startup tvos relative services iff exists
+    start tvservice
+    # startup mi relative services iff exists
+    start bootvideo
+    start misys
+    start cussysset
+
+    # insert ldm driver
+    insmod /vendor/lib/modules/mdrv_ldm.ko
+    # insert mali driver
+    insmod /vendor/lib/modules/mali_kbase.ko
+    # insert tuner driver, only used for kernel mode
+    #insmod /vendor/lib/modules/mdrv-tuner-si_2151.ko tuner=0
+    # insert utpa driver
+    insmod /vendor/lib/modules/utpa2k.ko
+
+    # enable ksm
+    #write /sys/kernel/mm/ksm/pages_to_scan 100
+    #write /sys/kernel/mm/ksm/sleep_millisecs 500
+    #write /sys/kernel/mm/ksm/run 1
+
+    # for memtrack
+    chmod 711 /sys/kernel/debug
+
+    chmod 444 /proc/cmdline
+
+    # restore security contexts of device nodes here
+    restorecon /dev/gflip
+    restorecon /dev/ir
+    restorecon /dev/msmailbox
+    restorecon /dev/system
+
+    # for ds-5
+    insmod /vendor/lib/modules/gator.ko
+
+on post-fs-data
+    mkdir /data/misc/wifi 0770 wifi wifi
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+    chown dhcp dhcp /data/misc/dhcp
+    mkdir /data/system 0771 system system
+    mkdir /data/system/wpa_supplicant 0770 wifi wifi
+
+    # Load Smit Usbcam Driver
+    insmod /vendor/lib/modules/usbcimoduledrv.ko
+
+    # realtek bluetooth
+    mkdir /data/misc/bluedroid 0770 bluetooth net_bt_stack
+    # bluetooth LPM
+    chown bluetooth net_bt_stack /proc/bluetooth/sleep/lpm
+    chown bluetooth net_bt_stack /proc/bluetooth/sleep/btwrite
+    # rfkill
+    chmod 0660 /sys/class/rfkill/rfkill0/state
+    chmod 0660 /sys/class/rfkill/rfkill0/type
+    chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/state
+    chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/type
+    # bluetooth MAC address programming
+    chown bluetooth net_bt_stack "/data/misc/bluetooth/bdaddr"
+
+    # pppoe.conf/resolv.conf for read-write
+    mkdir /data/misc/ppp 0777 system system
+
+on boot
+    # create the coredump file
+    write /proc/sys/kernel/core_pattern /var/coredump.%p.gz
+    write /proc/sys/net/core/rmem_max 1048576
+    write /proc/sys/net/core/wmem_max 1048576
+
+# service for bluetooth load driver
+service loadbt /vendor/bin/loadbt.sh
+    class main
+    disabled
+    oneshot
+    seclabel u:r:loadbt:s0
+service unloadbt /vendor/bin/unloadbt.sh
+    class main
+    disabled
+    oneshot
+    seclabel u:r:unloadbt:s0
+
+# service for optee
+service optee /vendor/bin/tee-supplicant
+    class main
+    seclabel u:r:tee:s0
+
+#servie for intertaca
+service intertaca /vendor/bin/intertaca
+    class main
+    oneshot
+    seclabel u:r:intertaca:s0
+
+# service for common wifi
+service loadwifi /vendor/bin/wifi_load_driver.sh
+    class main
+    disabled
+    oneshot
+    seclabel u:r:loadwifi:s0
+
+service unloadwifi /vendor/bin/wifi_unload_driver.sh
+    class main
+    disabled
+    oneshot
+    seclabel u:r:unloadwifi:s0
+
+service loadapwifi /vendor/bin/wifi_load_apdriver.sh
+    class main
+    disabled
+    oneshot
+    seclabel u:r:loadapwifi:s0
+
+service unloadapwifi /vendor/bin/wifi_unload_apdriver.sh
+    class main
+    disabled
+    oneshot
+    seclabel u:r:unloadapwifi:s0
+
+service startSuppl /vendor/bin/startSupplicant.sh
+    class main
+    disabled
+    oneshot
+    seclabel u:r:startSuppl:s0
+
+# DS-5
+service gatord /vendor/bin/gatord -s /vendor/etc/session.xml -c /vendor/etc/configuration.xml -o /data/${ro.hardware}.ds5
+    class core
+    disabled
+    user root
+    oneshot
+    seclabel u:r:zygote:s0
+
+# service for virtual keypad
+service virtualkeypad /vendor/bin/virtualkeypad
+    class main
+    user system
+    group system
+    oneshot
+    seclabel u:r:virtualkeypad:s0
+
+# services for livecap
+#service livecap /vendor/bin/livecap
+#    class main
+#    oneshot
+#    seclabel u:r:livecap:s0
+
+# service for resourcemanager
+service resourcemanager /vendor/bin/resourcemanager
+    class core
+    user system
+    group system
+    seclabel u:r:resourcemanager:s0
+
+# service for pppoe
+service pppd_eth0 /system/bin/pppd file /data/misc/ppp/options.conf file /data/misc/ppp/pwd.eth0
+    class main
+    disabled
+    oneshot
+    seclabel u:r:ppp:s0
+
+service pppd_eth0_stop /vendor/bin/pppoe-stop eth0
+    class main
+    disabled
+    oneshot
+    seclabel u:r:pppoe-stop:s0
+
+# service for browser
+service browserserver /vendor/bin/browserserver
+    class main
+    user system
+    group input
+    disabled
+    oneshot
+    seclabel u:r:browserserver:s0
+
+# turn on uart console for userbuild
+on property:ro.debuggable=0
+# Give writes to anyone for the trace folder on debug builds.
+# The folder is used to store method traces.
+    chmod 0773 /data/misc/trace
+    start console
